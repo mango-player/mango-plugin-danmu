@@ -28,6 +28,7 @@
     "babel-runtime": "^6.23.0",
     "mango": "file:../mango",
     "mango-helper": "file:../mango-helper",
+    "mango-plugin-controlbar": "file:../mango-plugin-controlbar",
     "toxic-decorators": "^0.3.8"
   },
   "devDependencies": {
