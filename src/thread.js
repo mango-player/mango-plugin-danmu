@@ -6,7 +6,8 @@ class Thread {
 		this.resize();
 	}
 	resize () {
-		this.rows = Math.floor(parseInt(this.pDom.offsetHeight) / this.config.lineHeight);
+		// 根据画布大小设定弹幕可显示的行数
+		this.rows = Math.floor(parseInt(this.pDom.offsetHeight - 100) / this.config.lineHeight);
 		this.vRows = Object.assign(new Array(this.rows), this.vRows);
 	}
 /**
