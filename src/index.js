@@ -29,8 +29,8 @@ const chimeeDanmu = {
     // 视频信息
     videoinfo: {
       video_id: 4247448,
-      pid: '',
-      clip_id: 313552
+      playlist_id: '',
+      collection_id: 313552
     },
 
     config: {}, // 后台弹幕开关配置
@@ -71,7 +71,7 @@ const chimeeDanmu = {
     removeEvent(document, 'visibilitychange', this.onVisibilityChange);
   },
   events: {
-    play () {
+    videoPlay () {
       if(!this.updateByVideo) return;
       this.status === 'open' && this.danmu.start();
     },
@@ -150,11 +150,11 @@ const chimeeDanmu = {
           version: this.version,
           vid: this.videoinfo.video_id,
           abroad: 0,
-          pid: this.videoinfo.pid,
+          pid: this.videoinfo.playlist_id,
           os: '',
           uuid: '',
           deviceid: '',
-          cid: this.videoinfo.clip_id,
+          cid: this.videoinfo.collection_id,
           ticket: '',
           mac: '',
           platform: 0
@@ -173,11 +173,11 @@ const chimeeDanmu = {
         version: this.version,
           vid: this.videoinfo.video_id,
           abroad: 0,
-          pid: this.videoinfo.pid,
+          pid: this.videoinfo.playlist_id,
           os: '',
           uuid: '',
           deviceid: '',
-          cid: this.videoinfo.clip_id,
+          cid: this.videoinfo.collection_id,
           ticket: '',
           time: parseInt(time),
           mac: '',
