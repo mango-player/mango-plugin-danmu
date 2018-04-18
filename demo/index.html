@@ -4,10 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>弹幕测试</title>
   <style>
+    body{margin:0;padding:0;text-align: center;background: rgb(239, 240, 189);}
     #wrap{
-      width: 700px;
+      width: 800px;
+      height: 560px;
+      margin: 30px auto 0;
+    }
+    #mark{
+      width: 800px;
+      height: 500px;
+      margin: 10px auto;
+      padding: 0;
+    }
+
+    #mark input{
+      border:none;
+      float:left;
+      outline:none;
+      width: 700px; height: 30px;line-height: 30px;
+      padding: 0px 10px;
+    }
+    #mark button{
+      float: right;border:none;width: 80px; height: 30px;line-height: 30px;
+      background: rgb(245, 134, 49);color:#fff;outline:none;
     }
   </style>
 </head>
@@ -32,18 +53,18 @@
       plugin: [
         {
           name: mangoPluginDanmu.name,
-          mode: 'canvas',
-          updateByVideo: false
+          mode: 'css',
+          updateByVideo: true
         }, 
         mangoPluginControlbar.name
       ],
       autoplay: true,
       controls: true,
-      volume: 0
+      volume: 0.5
     });
     $('.emit').click(function () {
       var text = $('input').val();
-      player.__dispatcher.plugins.chimeeDanmu.sendMsg(text);
+      player.__dispatcher.plugins.mangoDanmu.sendMsg(text);
     })
     player.on('danmuContextmenu', function (d) {
       console.log(d);
