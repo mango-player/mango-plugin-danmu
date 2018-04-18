@@ -8,11 +8,6 @@ const params = function(obj) {
   return Object.keys(obj).map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&')
 }
 
-const videoinfo = {
-  video_id: 4247448,
-  pid: '',
-  clip_id: 313552
-}
 /**
  * 插件默认配置
  */
@@ -30,6 +25,13 @@ const chimeeDanmu = {
   data: {
     version: '1.0.0',
     status: 'open', // 弹幕状态： 打开 or 关闭
+
+    // 视频信息
+    videoinfo: {
+      video_id: 4247448,
+      pid: '',
+      clip_id: 313552
+    },
 
     config: {}, // 后台弹幕开关配置
     interval: 60 * 1000, // 默认区间宽度
@@ -136,19 +138,23 @@ const chimeeDanmu = {
       e.preventDefault();
       const p = this.danmu.getPieceByPoint(e.offsetX, e.offsetY); 
       this.$emit('danmuContextmenu', p);     
+    },
+    // CMS返回结果 请求前贴片广告
+    cmsDataComplete(data){
+      this.videoinfo = data.info
     }
   },
   methods: {
     _getConfig() {
       const url = danmakuAPI + '/getctlbarrage?' + params({
           version: this.version,
-          vid: videoinfo.video_id,
+          vid: this.videoinfo.video_id,
           abroad: 0,
-          pid: videoinfo.pid,
+          pid: this.videoinfo.pid,
           os: '',
           uuid: '',
           deviceid: '',
-          cid: videoinfo.clip_id,
+          cid: this.videoinfo.clip_id,
           ticket: '',
           mac: '',
           platform: 0
@@ -165,19 +171,19 @@ const chimeeDanmu = {
     _fetchDanmu (time) {
       const url = danmakuAPI + '/rdbarrage?' + params({
         version: this.version,
-          vid: videoinfo.video_id,
+          vid: this.videoinfo.video_id,
           abroad: 0,
-          pid: videoinfo.pid,
+          pid: this.videoinfo.pid,
           os: '',
           uuid: '',
           deviceid: '',
-          cid: videoinfo.clip_id,
+          cid: this.videoinfo.clip_id,
           ticket: '',
           time: parseInt(time),
           mac: '',
           platform: 0
       })
-      return fetchJsonp(url)
+      return fetchJsonp(url, {timeout: 10 * 1000})
         .then((response) => response.json())
         .then((json: any)=> {
           if(json && json.status == 0 && json.data) {
