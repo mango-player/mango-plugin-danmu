@@ -126,7 +126,7 @@ const chimeeDanmu = {
             }
           })
           // 抛掉过多的弹幕内容
-          find = find.slice(0, 10);
+          find = find.slice(0, 6);
 
           find.forEach(item => {
             item._sent = true
