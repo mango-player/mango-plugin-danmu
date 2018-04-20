@@ -38,6 +38,7 @@ const chimeeDanmu = {
     cache: [], // 弹幕缓存池
     _currentTime: 0,
     lastCurrentTime: 0,
+    fetchLock: true, // 拉取数据的锁
 
     danmu: {},
 
@@ -72,12 +73,22 @@ const chimeeDanmu = {
   },
   events: {
     videoPlay () {
+      console.log('videoPlay')
       if(!this.updateByVideo) return;
       this.status === 'open' && this.danmu.start();
+      this.fetchLock = false;
     },
-    pause () {
+    videoResume () {
+      console.log('videoResume')
+      if(!this.updateByVideo) return;
+      this.status === 'open' && this.danmu.start();
+      this.fetchLock = false;
+    },
+    videoPause () {
+      console.log('videoPause')
       if(!this.updateByVideo) return;
       this.status === 'open' && this.danmu.pause();
+      this.fetchLock = true;
     },
     // 视频seek之后进行的弹幕回调处理函数
     seek(){
@@ -100,7 +111,7 @@ const chimeeDanmu = {
         // 判断是否需要拉取接口数据, 提前5s进行预抓取
         let index = Math.floor(this._currentTime / this.interval)
         if( !this.cache[index] ) {
-            console.log('[弹幕插件] 拉取弹幕数据: ' + this._currentTime + ', index=' + index)
+            // console.log('[弹幕插件] 拉取弹幕数据: ' + this._currentTime + ', index=' + index)
             this._fetchDanmu(this._currentTime)
         }
 
@@ -169,6 +180,9 @@ const chimeeDanmu = {
     },
 
     _fetchDanmu (time) {
+      if(this.fetchLock) return;
+
+      console.log('[弹幕插件] 拉取弹幕数据: ' + time)
       const url = danmakuAPI + '/rdbarrage?' + params({
         version: this.version,
           vid: this.videoinfo.video_id,

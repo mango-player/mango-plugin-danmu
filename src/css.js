@@ -58,6 +58,8 @@ class Css {
   }
 
   start () {
+    // 避免重复调用两次的问题
+    this.timer && caf.call(window, this.timer);
     this.render();
   }
 
