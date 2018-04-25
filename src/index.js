@@ -151,8 +151,10 @@ const chimeeDanmu = {
       this.$emit('danmuContextmenu', p);     
     },
     // CMS返回结果 请求前贴片广告
-    cmsDataComplete(data){
-      this.videoinfo = data.info
+    cmsData(data){
+      if(data.status == 'loadComplete') {
+        this.videoinfo = data.data.info
+      }
     }
   },
   methods: {
